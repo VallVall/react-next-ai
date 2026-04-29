@@ -31,7 +31,7 @@ src/features/[action]-[entity]/
 ### `api/types.ts`
 
 ```ts
-export type [Action][Entity]Data = {};
+export type [Action][Entity]Data = object;
 ```
 
 ### `api/[action]-[entity].ts`
@@ -68,7 +68,7 @@ export { use[Action][Entity] } from "./use-[action]-[entity]";
 ### `ui/types.ts`
 
 ```ts
-type [Action][Entity]Props = {};
+type [Action][Entity]Props = object;
 
 export type [Action][Entity]FeatureProps = {
   data: [Action][Entity]Props;

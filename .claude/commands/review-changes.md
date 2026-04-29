@@ -107,23 +107,23 @@ Collect all agent responses. Parse the JSON from each.
 
 Print a single report:
 
-### ✅ Исправлю сам
+### ✅ Will fix automatically
 
 For each file that has `auto` issues, list:
 
 - **`file path`** — issue description
 
-If no auto issues across all files — write "Нет автоматических правок".
+If no auto issues across all files — write "No automatic fixes needed".
 
-Then ask: **"Исправить всё автоматически?"** and wait for confirmation before making any edits.
+Then ask: **"Fix everything automatically?"** and wait for confirmation before making any edits.
 
-### 👀 Нужна твоя проверка
+### 👀 Needs your review
 
 For each file that has `manual` issues, list:
 
 - **`file path`** — issue description
 
-If no manual issues across all files — write "Нет замечаний".
+If no manual issues across all files — write "No issues found".
 
 ---
 
