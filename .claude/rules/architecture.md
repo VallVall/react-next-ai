@@ -39,12 +39,22 @@ features/auth/
 
 ## Public API rule
 
-Every slice must have `index.ts` that explicitly exports what is allowed to be used outside:
+Every slice and every folder inside `src/` must have an `index.ts` that explicitly exports what is allowed to be used outside:
 
 ```ts
 // features/auth/index.ts
 export { LoginForm } from "./ui/login-form";
 export { useLogin } from "./model/use-login";
+```
+
+This applies to all levels — slices, segments, and nested folders:
+
+```ts
+// features/auth/ui/index.ts
+export { LoginForm } from "./login-form";
+
+// shared/api/index.ts
+export { httpClient } from "./http-client";
 ```
 
 Never import from inside a slice directly (`features/auth/ui/login-form`) — always use the slice index.
@@ -63,6 +73,42 @@ app → pages → widgets → features → entities → shared
 - `widgets` imports from `features`, `entities`, and `shared`
 - `pages` imports from `widgets` and below
 - `app` can import from any layer
+
+## Feature contract
+
+Every feature must define its own contract in `model/types.ts`:
+
+```ts
+// features/auth/model/types.ts
+export type LoginData = {
+  email: string;
+  password: string;
+};
+
+export type LoginFeatureProps = {
+  data?: LoginData;
+  onSuccess: () => void;
+  onError: () => void;
+};
+```
+
+- `data` — input data for the feature, typed and defined inside the feature
+- `onSuccess` — called when the feature completes successfully
+- `onError` — called when the feature fails
+
+The feature component accepts this contract as props:
+
+```tsx
+// features/auth/ui/login-form.tsx
+import type { LoginFeatureProps } from "../model/types";
+
+export function LoginForm(props: LoginFeatureProps) {
+  const { data, onSuccess, onError } = props;
+  // ...
+}
+```
+
+Never leak internal feature state or logic outside — communicate only through `onSuccess` and `onError`.
 
 ## Tips
 
